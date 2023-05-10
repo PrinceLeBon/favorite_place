@@ -27,9 +27,7 @@ class PlaceCard extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(
-                    color: tag((detailFromRoad[0]?.round())! +
-                        (detailFromRoad[2]?.round())!),
-                    width: 8),
+                    color: tag((detailFromRoad[1]?.round())!), width: 8),
               ),
             ),
             child: Column(
@@ -98,25 +96,12 @@ class PlaceCard extends StatelessWidget {
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('Marchand - Client:'),
-                                Expanded(
-                                    child: Text(
-                                        ' ${detailFromRoad[2]?.round()} km, ${formatDuration(detailFromRoad[3]!)}'))
-                              ],
-                            ),
-                            Container(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text(
                                   'Durée:',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                Text(' ${formatDuration(detailFromRoad[4]!)}',
+                                Text(' ${formatDuration(detailFromRoad[1]!)}',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold))
                               ],
