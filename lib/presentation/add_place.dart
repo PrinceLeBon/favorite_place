@@ -16,6 +16,8 @@ class AddFavoritePlace extends StatefulWidget {
 }
 
 class _AddFavoritePlaceState extends State<AddFavoritePlace> {
+  bool taped = false;
+
   late MapController mapController = MapController.withUserPosition(
     areaLimit: const BoundingBox.world(),
   );
@@ -75,6 +77,9 @@ class _AddFavoritePlaceState extends State<AddFavoritePlace> {
                             child: FloatingActionButton(
                               onPressed: () async {
                                 await mapController.advancedPositionPicker();
+                                setState(() {
+                                  taped = true;
+                                });
                               },
                               child: const Icon(Icons.my_location),
                             ))
@@ -114,6 +119,12 @@ class _AddFavoritePlaceState extends State<AddFavoritePlace> {
                             style: const TextStyle(
                                 fontSize: 13, color: Colors.black),
                             controller: myController2,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter a note or a comment";
+                              }
+                              return null;
+                            },
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.comment),
                                 enabledBorder: OutlineInputBorder(
@@ -136,6 +147,14 @@ class _AddFavoritePlaceState extends State<AddFavoritePlace> {
         floatingActionButton: FloatingActionButton(
             onPressed: () async {
               if (formKey.currentState!.validate()) {
+                if (taped) {
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                        "Please choose a location by tapping the button on the map and dragging it to your favorite location before saving."),
+                    duration: Duration(seconds: 5),
+                  ));
+                }
                 final PlaceCubit placeCubit = context.read<PlaceCubit>();
                 GeoPoint p = await mapController
                     .getCurrentPositionAdvancedPositionPicker();
