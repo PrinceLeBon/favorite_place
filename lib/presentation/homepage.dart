@@ -1,7 +1,9 @@
 import 'package:favoriteplace/presentation/maps.dart';
+import 'package:favoriteplace/presentation/view_one_place.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../business_logic/cubits/place/place_cubit.dart';
+import '../business_logic/cubits/static_geo_points/static_geo_points_cubit.dart';
 import '../data/models/place.dart';
 import 'add_place.dart';
 
@@ -56,6 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
                           title: Text(placeState.twolist.list1[index].name),
                           subtitle:
                               Text(placeState.twolist.list1[index].comment),
+                          onTap: () {
+                            context
+                                .read<StaticGeoPointsCubit>()
+                                .getStaticsGeoPoint(placeState.twolist.list2,
+                                    placeState.twolist.list1[index].id);
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return ViewOneFavoritePlace(
+                                  place: placeState.twolist.list1[index]);
+                            }));
+                          },
                         ),
                       ),
                     );

@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:favoriteplace/data/models/two_lists.dart';
 import 'package:flutter/foundation.dart';
@@ -23,11 +22,6 @@ class PlaceCubit extends Cubit<PlaceState> {
       List<Place> placeList =
           List.castFrom(placeBox.get("placesList", defaultValue: []))
               .cast<Place>();
-      /*for (int i = 0; i< placeList.length; i++){
-        if (kDebugMode) {
-          print("${placeList[i].id} objectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobjectobject");
-        }
-      }*/
       staticGeoPoints = placeList
           .map((place) => StaticGeoPoint(
               id: place.id,
