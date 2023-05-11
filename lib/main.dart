@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (BuildContext context) => PlaceCubit()),
+          BlocProvider(
+              create: (BuildContext context) => PlaceCubit()..getAllPlaces()),
           BlocProvider(
               create: (BuildContext context) => StaticGeoPointsCubit()),
         ],
@@ -31,12 +32,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: const MyHomePage(),
-        )); /*MaterialApp(
-      title: 'Favorite Places',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );*/
+          debugShowCheckedModeBanner: false,
+        ));
   }
 }
