@@ -47,6 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
                         child: ListTile(
+                          leading: IconButton(
+                              onPressed: () {
+                                context.read<PlaceCubit>().deletePlace(
+                                    index, placeState.twolist.list1);
+                              },
+                              icon: const Icon(Icons.delete)),
                           title: Text(placeState.twolist.list1[index].name),
                           subtitle:
                               Text(placeState.twolist.list1[index].comment),

@@ -7,113 +7,98 @@ class PlaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return Container();
-        }));
-      },
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: ClipPath(
-          clipper: ShapeBorderClipper(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: ClipPath(
+        clipper: ShapeBorderClipper(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                  color: tag((detailFromRoad[1]?.round())!), width: 8),
             ),
           ),
-          child: Container(
-            padding: const EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              border: Border(
-                left: BorderSide(
-                    color: tag((detailFromRoad[1]?.round())!), width: 8),
-              ),
-            ),
-            child: Column(
-              children: [
-                IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            SizedBox(height: 15),
-                            Text("total F CFA"),
-                            Spacer()
-                          ],
-                        ),
+          child: Column(
+            children: [
+              IntrinsicHeight(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          SizedBox(height: 15),
+                          Text("total F CFA"),
+                          Spacer()
+                        ],
                       ),
-                      const VerticalDivider(color: Colors.grey, thickness: 2),
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                CircleAvatar(
-                                  radius: 5.0,
-                                  backgroundColor: Colors.blue,
-                                ),
-                                SizedBox(width: 10.0),
-                                Text("Position actuelle - Marchand"),
-                              ],
-                            ),
-                            Container(
-                              height: 10,
-                            ),
-                            Row(
-                              children: const [
-                                CircleAvatar(
-                                  radius: 5.0,
-                                  backgroundColor: Colors.red,
-                                ),
-                                SizedBox(width: 10.0),
-                                Text("Marchand - Client"),
-                              ],
-                            ),
-                            const Divider(
-                              thickness: 1.4,
-                              indent: 20.0,
-                              endIndent: 20.0,
-                              height: 25.0,
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('Position actuelle - Marchand:'),
-                                Expanded(
-                                    child: Text(
-                                        ' ${detailFromRoad[0]?.round()} km, ${formatDuration(detailFromRoad[1]!)}'))
-                              ],
-                            ),
-                            Container(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Durée:',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(' ${formatDuration(detailFromRoad[1]!)}',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold))
-                              ],
-                            ),
-                          ],
-                        ),
+                    ),
+                    const VerticalDivider(color: Colors.grey, thickness: 2),
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: const [
+                              CircleAvatar(
+                                radius: 5.0,
+                                backgroundColor: Colors.blue,
+                              ),
+                              SizedBox(width: 10.0),
+                              Text("Current position - Favorite place"),
+                            ],
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          const Divider(
+                            thickness: 1.4,
+                            indent: 20.0,
+                            endIndent: 20.0,
+                            height: 25.0,
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Distance:',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(' ${detailFromRoad[0]?.round()} km',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Duration:',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(' ${formatDuration(detailFromRoad[1]!)}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

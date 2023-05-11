@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:meta/meta.dart';
 import '../../../data/models/static_geo_point.dart';

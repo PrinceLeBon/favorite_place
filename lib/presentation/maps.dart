@@ -5,6 +5,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../business_logic/cubits/place/place_cubit.dart';
 import '../business_logic/cubits/static_geo_points/static_geo_points_cubit.dart';
+import '../data/models/place.dart';
 
 class Maps extends StatefulWidget {
   const Maps({Key? key}) : super(key: key);
@@ -42,7 +43,20 @@ class _MapsState extends State<Maps> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.blue,
+                size: 30,
+              )),
+        ),
         body:
             BlocBuilder<PlaceCubit, PlaceState>(builder: (context, placeState) {
           if (placeState is PlaceLoaded) {
@@ -50,7 +64,8 @@ class _MapsState extends State<Maps> {
               context.read<StaticGeoPointsCubit>().getStaticsGeoPoint(
                   placeState.twolist.list2,
                   placeState.twolist.list1[_currentIndex].id);
-              return BlocBuilder(builder: (context, staticPointState) {
+              return BlocBuilder<StaticGeoPointsCubit, StaticGeoPointsState>(
+                  builder: (context, staticPointState) {
                 if (staticPointState is StaticGeoPointsLoaded) {
                   return Stack(
                     children: [
@@ -64,7 +79,7 @@ class _MapsState extends State<Maps> {
                             defaultMarker: const MarkerIcon(
                           icon: Icon(
                             Icons.person_pin_circle,
-                            color: Colors.blue,
+                            color: Colors.yellow,
                             size: 100,
                           ),
                         )),
@@ -73,20 +88,29 @@ class _MapsState extends State<Maps> {
                           bottom: 0,
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            height: 220,
+                            height: 170,
                             child: PageView.builder(
                               controller: _pageController,
-                              itemCount: 1,
+                              itemCount: placeState.twolist.list1.length,
                               onPageChanged: (onPageChangedIndex) async {
                                 setState(() {
                                   _currentIndex = onPageChangedIndex;
                                 });
+                                context
+                                    .read<StaticGeoPointsCubit>()
+                                    .getStaticsGeoPoint(
+                                        placeState.twolist.list2,
+                                        placeState
+                                            .twolist.list1[_currentIndex].id);
+                                await mapController.clearAllRoads();
                               },
                               itemBuilder: (BuildContext context, int index) {
+                                Place place =
+                                    placeState.twolist.list1[_currentIndex];
                                 return FutureBuilder<List<double?>>(
                                   future: route(GeoPoint(
-                                      latitude: double.parse(""),
-                                      longitude: double.parse(""))),
+                                      latitude: place.latitude,
+                                      longitude: place.longitude)),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
@@ -104,18 +128,25 @@ class _MapsState extends State<Maps> {
                                           SmoothPageIndicator(
                                             controller: _pageController,
                                             // PageController
-                                            count: 1,
+                                            count:
+                                                placeState.twolist.list1.length,
                                           )
                                         ],
                                       );
                                     } else if (snapshot.hasError) {
-                                      return const Center(
-                                        child: Text(
-                                            "Balayer vers la droite ou la gauche pour défiler"),
+                                      return Center(
+                                        child: TextButton(
+                                            onPressed: () {
+                                              context
+                                                  .read<PlaceCubit>()
+                                                  .getAllPlaces();
+                                            },
+                                            child: const Text("Tap to reload")),
                                       );
                                     } else {
                                       return const Center(
-                                        child: CircularProgressIndicator(),
+                                        child: CircularProgressIndicator(
+                                            color: Colors.red),
                                       );
                                     }
                                   },
